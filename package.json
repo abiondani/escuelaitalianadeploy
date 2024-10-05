@@ -16,7 +16,10 @@
   "license": "ISC",
   "description": "Proyecto educativo realizado por Biondani, López, Longhitano, Sassi, Sparo para la materia de Backend para el IFTS-29",
   "dependencies": {
-    "express": "^4.21.0"
+    "body-parser": "^1.20.3",
+    "express": "^4.21.0",
+    "mongoose": "^8.7.0",
+    "pug": "^3.0.3"
   },
   "devDependencies": {
     "nodemon": "^3.1.7"
