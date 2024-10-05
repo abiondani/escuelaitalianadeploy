@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 mongoose.connect("mongodb://localhost/escuela");
 
 app.get('/', (req, res) => {
-  res.send('Hola, Mundo!');
+  res.send('Hola, Mundo!!');
 });
 
 const PORT = process.env.PORT || 3000;
