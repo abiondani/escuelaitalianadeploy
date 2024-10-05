@@ -13,9 +13,11 @@ var AlumnoCtrl = require("./controllers/escuela");
 //   res.send('Hola, Mundo!!');
 // });
 
-alumno.route("/alumno").post(AlumnoCtrl.addAlumno);
 app.use(express.json());
-app.use("/", alumno);
+
+alumno.route("/alumno").post(AlumnoCtrl.addAlumno);
+
+app.use("/api", alumno);
 
 
 const PORT = process.env.PORT || 3000;
