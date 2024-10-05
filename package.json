@@ -1,0 +1,24 @@
+{
+  "name": "escuelaitaliana",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "keywords": [
+    "express",
+    "nodejs",
+    "escuela",
+    "italiana"
+  ],
+  "author": "Biondani, López, Longhitano, Sassi, Sparo",
+  "license": "ISC",
+  "description": "Proyecto educativo realizado por Biondani, López, Longhitano, Sassi, Sparo para la materia de Backend para el IFTS-29",
+  "dependencies": {
+    "express": "^4.21.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  }
+}
