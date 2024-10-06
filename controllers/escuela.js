@@ -1,6 +1,7 @@
 var mongoose = require("mongoose");
 var Alumno = mongoose.model("Alumno");
 
+// Método para agregar a un alumno
 exports.addAlumno = async function (req, resp) {
     try {
         console.log("alta del alumno:");
@@ -17,13 +18,12 @@ exports.addAlumno = async function (req, resp) {
     }
 };
 
-exports.getAlumnos = async function(req, resp){
+// Método para obtener todos los alumnos
+exports.getAlumnos = async function (req, resp) {
     try {
-        const alumnos = await Alumno.find({});
+        const alumnos = await Alumno.find();
         resp.status(200).json(alumnos);
-        
-    } catch (error) {
-        console.log(error.message)
+    } catch (err) {
+        resp.status(500).json({ error: err.message });
     }
-}
-
+};
