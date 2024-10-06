@@ -17,3 +17,13 @@ exports.addAlumno = async function (req, resp) {
     }
 };
 
+exports.getAlumnos = async function(req, resp){
+    try {
+        const alumnos = await Alumno.find({});
+        resp.status(200).json(alumnos);
+        
+    } catch (error) {
+        console.log(error.message)
+    }
+}
+
