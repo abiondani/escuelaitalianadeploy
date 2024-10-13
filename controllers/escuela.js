@@ -29,7 +29,7 @@ exports.getAlumnos = async function (req, resp) {
 exports.login = async function (req, res) {
     try {
         const { usuario, contrasena } = req.body;
-        const usuarioRecuperado = await Usuario.findOne({ usuario: usuario });
+        const usuarioRecuperado = await Usuario.findOne({ usuario: usuario }).populate("Alumno");
 
         if (!usuarioRecuperado) {
             return res
