@@ -1,0 +1,23 @@
+html
+  head
+    title Iniciar Sesión
+    link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css")
+  body
+    .container
+      .row
+        .col-md-6.offset-md-3
+          h1 Escuela Italiana
+          h3 Iniciar Sesión
+          form(action="/api/login", method="POST")
+            .form-group
+              label(for="usuario") Usuario
+              input#usuario.form-control(type="text", name="usuario", required)
+            .form-group
+              label(for="contrasena") Contraseña
+              input#contrasena.form-control(type="password", name="contrasena", required)
+            button.btn.btn-primary(type="submit") Iniciar Sesión
+            if error
+              p
+              .alert.alert-danger(role="alert") #{error}
+
+        

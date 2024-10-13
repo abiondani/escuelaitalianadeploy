@@ -1,0 +1,27 @@
+[
+    {
+        "usuario": "ale",
+        "clave": 123,
+        "rol": "alumno"
+    },
+    {
+        "usuario": "seba",
+        "clave": 123,
+        "rol": "administrador"
+    },
+    {
+        "usuario": "vani",
+        "clave": 123,
+        "rol": "profesor"
+    },
+    {
+        "usuario": "juampi",
+        "clave": 123,
+        "rol": "padre"
+    },
+    {
+        "usuario": "luciano",
+        "clave": 123,
+        "rol": "alumno"
+    }
+]
