@@ -1,7 +1,20 @@
-doctype html
 html
-head    
-    title "Escuela Italiana"
-body
-    p.greetings#people Está funcionando el motor de plantillas en pug !
-    
+  head
+    title Iniciar Sesión
+    link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css")
+  body
+    .container
+      .row
+        .col-md-6.offset-md-3
+          h1 Iniciar Sesión
+          form(action="/login", method="POST")
+            .form-group
+              label(for="usuario") Usuario
+              input#usuario.form-control(type="text", name="usuario", required)
+            .form-group
+              label(for="contrasena") Contraseña
+              input#contrasena.form-control(type="password", name="contrasena", required)
+            button.btn.btn-primary(type="submit") Iniciar Sesión
+
+
+        
