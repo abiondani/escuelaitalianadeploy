@@ -17,6 +17,7 @@ var AlumnoCtrl = require("./controllers/escuela");
 app.use(express.json());
 
 alumno.route("/alumno").post(AlumnoCtrl.addAlumno);
+alumno.route("/alumno").get(AlumnoCtrl.getAlumnos);
 
 app.use("/api", alumno);
 
