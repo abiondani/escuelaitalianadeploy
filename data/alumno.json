@@ -1,0 +1,9 @@
+[
+    {
+        "_id": 2000006,
+        "nombre": "Juan",
+        "apellido": "Topo II",
+        "padre": "Juan Topo I",
+        "usuario" : 1000006
+    }
+]

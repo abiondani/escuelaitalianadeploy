@@ -51,14 +51,36 @@ async function cargaInicialUsuarios() {
     var Usuario = mongoose.model("Usuario");
     const count = await Usuario.countDocuments();
     console.log(count);
+
     if (count === 0) {
         await Usuario.insertMany(datosUsuarios);
+        await cargaAlumnos();
         console.log(
             "Datos iniciales de usuarios cargados en la base de datos."
         );
     } else {
         console.log(
             "La base de datos ya contiene datos, se omite la carga inicial."
+        );
+    }
+}
+
+async function cargaAlumnos() {
+    const rutaDatosAlumno = path.join(__dirname, "data", "alumno.json");
+    const datosAlumno = JSON.parse(
+        fs.readFileSync(rutaDatosAlumno, "utf8")
+    );
+    var Alumno = mongoose.model("Alumno");
+    const count = await Alumno.countDocuments();
+    console.log(count);
+    if (count === 0) {
+        await Alumno.insertMany(datosAlumno);
+        console.log(
+            "Datos de los alumnos cargados en la base de datos."
+        );
+    } else {
+        console.log(
+            "La base de datos ya contiene datos..."
         );
     }
 }

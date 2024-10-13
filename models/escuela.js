@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 // Esquema para Alumnos
 const alumnoSchema = new Schema({
-    Id: {
+    _id: {
         type: Number,
         required: true,
     },
@@ -20,13 +20,17 @@ const alumnoSchema = new Schema({
         required: true,
     },
     usuario: {
-        type: Schema.Types.ObjectId,
+        type: Number,
         ref: 'Usuario',
-    },
+    }
 });
 
 // Esquema para Usuarios
 const usuarioSchema = new Schema({
+    _id: {
+        type: Number,
+        required: true,
+    },
     usuario: {
         type: String,
         required: true,
@@ -38,7 +42,7 @@ const usuarioSchema = new Schema({
     rol: {
         type: String,
         required: true,
-    },
+    }
 });
 
 // Esquema para Cursos

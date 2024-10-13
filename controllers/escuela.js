@@ -29,7 +29,7 @@ exports.getAlumnos = async function (req, resp) {
 exports.login = async function (req, res) {
     try {
         const { usuario, contrasena } = req.body;
-        const usuarioRecuperado = await Usuario.findOne({ usuario: usuario }).populate("Alumno");
+        const usuarioRecuperado = await Usuario.findOne({ usuario: usuario });
 
         if (!usuarioRecuperado) {
             return res
@@ -37,6 +37,20 @@ exports.login = async function (req, res) {
                 .render("index", { error: "Usuario no encontrado" });
         } else {
             if (usuarioRecuperado.clave === contrasena) {
+                console.log(usuarioRecuperado)
+                switch (usuarioRecuperado.rol)
+                {
+                    case "alumno":
+                        const alumnoRecuperado = await Alumno.findOne({ usuario: usuarioRecuperado._id });
+                        return res.render("alumno", {alumno : alumnoRecuperado});
+                        break;
+                    case "administrador":
+                        console.log("Bienvenido a la sección de administradores")
+                    break;
+                    case "profesor":
+                        console.log("Bienvenido a la sección de profesores")
+                        break;
+                }
                 return res.redirect("/app");
             } else {
                 return res
@@ -45,6 +59,7 @@ exports.login = async function (req, res) {
             }
         }
     } catch (error) {
+        console.log("entro al catch");
         res.status(500).send("Error interno del servidor");
     }
 };

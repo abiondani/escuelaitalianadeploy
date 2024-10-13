@@ -2,26 +2,37 @@
     {
         "usuario": "ale",
         "clave": 123,
-        "rol": "alumno"
+        "rol": "alumno",
+        "_id": 1000001
     },
     {
         "usuario": "seba",
         "clave": 123,
-        "rol": "administrador"
+        "rol": "administrador",
+        "_id": 1000002
     },
     {
         "usuario": "vani",
         "clave": 123,
-        "rol": "profesor"
+        "rol": "profesor",
+        "_id": 1000003
     },
     {
         "usuario": "juampi",
         "clave": 123,
-        "rol": "padre"
+        "rol": "padre",
+        "_id": 1000004
     },
     {
         "usuario": "luciano",
         "clave": 123,
-        "rol": "alumno"
+        "rol": "alumno",
+        "_id": 1000005
+    },
+    {
+        "usuario": "JuanTopoI",
+        "clave": 123,
+        "rol": "alumno",
+        "_id": 1000006
     }
 ]
