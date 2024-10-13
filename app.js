@@ -2,6 +2,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 const pug = require("pug");
+const fs = require("fs");
+const path = require("path");
 
 var mongoose = require("mongoose");
 mongoose.connect("mongodb://localhost/escuela");
@@ -29,6 +31,34 @@ app.get("/app", function (req, res) {
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`El servidor está corriendo en el puerto: ${PORT}`);
-});
+cargaInicialUsuarios()
+    .then(() => {
+        app.listen(PORT, () => {
+            console.log(
+                `El servidor está corriendo en http://localhost:${PORT}`
+            );
+        });
+    })
+    .catch((err) => {
+        console.error("Error al cargar los datos:", err);
+    });
+
+async function cargaInicialUsuarios() {
+    const rutaDatosUsuarios = path.join(__dirname, "data", "usuarios.json");
+    const datosUsuarios = JSON.parse(
+        fs.readFileSync(rutaDatosUsuarios, "utf8")
+    );
+    var Usuario = mongoose.model("Usuario");
+    const count = await Usuario.countDocuments();
+    console.log(count);
+    if (count === 0) {
+        await Usuario.insertMany(datosUsuarios);
+        console.log(
+            "Datos iniciales de usuarios cargados en la base de datos."
+        );
+    } else {
+        console.log(
+            "La base de datos ya contiene datos, se omite la carga inicial."
+        );
+    }
+}
