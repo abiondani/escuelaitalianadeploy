@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const pug = require('pug');
 
 var mongoose = require('mongoose');
 mongoose.connect("mongodb://localhost/escuela");
@@ -18,6 +19,13 @@ app.use(express.json());
 alumno.route("/alumno").post(AlumnoCtrl.addAlumno);
 
 app.use("/api", alumno);
+
+app.set('views', './views');
+app.set('view engine', 'pug');
+app.get('/', function (req, res) {
+  res.render('index');
+  });
+
 
 
 const PORT = process.env.PORT || 3000;
