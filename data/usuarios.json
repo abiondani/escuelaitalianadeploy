@@ -1,38 +1,32 @@
 [
     {
-        "usuario": "ale",
+        "usuario": "biondania",
         "clave": 123,
         "rol": "alumno",
         "_id": 1000001
     },
     {
-        "usuario": "seba",
+        "usuario": "longhitanos",
         "clave": 123,
-        "rol": "administrador",
+        "rol": "alumno",
         "_id": 1000002
     },
     {
-        "usuario": "vani",
+        "usuario": "lopezl",
         "clave": 123,
-        "rol": "profesor",
+        "rol": "alumno",
         "_id": 1000003
     },
     {
-        "usuario": "juampi",
+        "usuario": "sassiv",
         "clave": 123,
-        "rol": "padre",
+        "rol": "profesor",
         "_id": 1000004
     },
     {
-        "usuario": "luciano",
+        "usuario": "sparoj",
         "clave": 123,
-        "rol": "alumno",
+        "rol": "administrativo",
         "_id": 1000005
-    },
-    {
-        "usuario": "JuanTopoI",
-        "clave": 123,
-        "rol": "alumno",
-        "_id": 1000006
     }
 ]

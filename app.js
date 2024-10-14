@@ -1,19 +1,26 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const app = express();
-const pug = require("pug");
-const fs = require("fs");
 const path = require("path");
+const fs = require("fs");
+const pug = require("pug");
+const mongoose = require("mongoose");
+const express = require("express");
 
-var mongoose = require("mongoose");
+// Nuestra app escuchará el puerto 127.0.0.1:3000
+const PORT = process.env.PORT || 3000;
+const app = express();
+
+// Se estable la conexion con la base de datos y se registra
+// el modelo de Mongoose de manera global.
 mongoose.connect("mongodb://localhost/escuela");
 require("./models/escuela");
 
 var alumno = express.Router();
 var AlumnoCtrl = require("./controllers/escuela");
 
+// Middlewares para procesar el body de requests HTTP.
+// urlencoded lo usamos para procesar los datos de los
+// formularios.
 app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 
 alumno.route("/alumno").post(AlumnoCtrl.addAlumno);
 alumno.route("/alumno").get(AlumnoCtrl.getAlumnos);
@@ -21,8 +28,10 @@ alumno.route("/login").post(AlumnoCtrl.login);
 
 app.use("/api", alumno);
 
+// Definimos a PUG como nuestro motor de plantillas.
 app.set("views", "./views");
 app.set("view engine", "pug");
+
 app.get("/", function (req, res) {
     res.render("index");
 });
@@ -30,57 +39,53 @@ app.get("/app", function (req, res) {
     res.render("app");
 });
 
-const PORT = process.env.PORT || 3000;
-cargaInicialUsuarios()
-    .then(() => {
+// Iniciamos el servidor:puerto y precargamos datos de
+// prueba
+iniciarApp();
+
+async function iniciarApp() {
+    try {
+        // Carga inicial de datos. Si un esquema ya posee datos
+        // resultado=true, deja de cargar los esquemas siguientes.
+        let resultado = await cargaInicial("usuarios.json", "Usuario");
+        if (resultado) resultado = await cargaInicial("alumnos.json", "Alumno");
+
+        // Inicia el servidor para escuchar requests HTTP.
         app.listen(PORT, () => {
             console.log(
                 `El servidor está corriendo en http://localhost:${PORT}`
             );
         });
-    })
-    .catch((err) => {
-        console.error("Error al cargar los datos:", err);
-    });
-
-async function cargaInicialUsuarios() {
-    const rutaDatosUsuarios = path.join(__dirname, "data", "usuarios.json");
-    const datosUsuarios = JSON.parse(
-        fs.readFileSync(rutaDatosUsuarios, "utf8")
-    );
-    var Usuario = mongoose.model("Usuario");
-    const count = await Usuario.countDocuments();
-    console.log(count);
-
-    if (count === 0) {
-        await Usuario.insertMany(datosUsuarios);
-        await cargaAlumnos();
-        console.log(
-            "Datos iniciales de usuarios cargados en la base de datos."
-        );
-    } else {
-        console.log(
-            "La base de datos ya contiene datos, se omite la carga inicial."
-        );
+    } catch (err) {
+        console.error("Error durante la inicialización de la app:\n", err);
     }
 }
 
-async function cargaAlumnos() {
-    const rutaDatosAlumno = path.join(__dirname, "data", "alumno.json");
-    const datosAlumno = JSON.parse(
-        fs.readFileSync(rutaDatosAlumno, "utf8")
-    );
-    var Alumno = mongoose.model("Alumno");
-    const count = await Alumno.countDocuments();
-    console.log(count);
-    if (count === 0) {
-        await Alumno.insertMany(datosAlumno);
-        console.log(
-            "Datos de los alumnos cargados en la base de datos."
-        );
-    } else {
-        console.log(
-            "La base de datos ya contiene datos..."
+// Creamos una función que precarga datos en la base
+// para poder verificar el funcionamiento de la app.
+async function cargaInicial(archivo, esquema) {
+    try {
+        console.log(`Intentando cargar el esquema ${esquema}...`);
+
+        const ruta = path.join(__dirname, "data", archivo);
+        const datos = JSON.parse(fs.readFileSync(ruta, "utf8"));
+        const Esquema = mongoose.model(esquema);
+        const count = await Esquema.countDocuments();
+
+        if (count != 0) {
+            console.log(
+                `Ya existen datos de ${esquema}, se omite la carga inicial.`
+            );
+            return false;
+        }
+
+        await Esquema.insertMany(datos);
+        console.log(`Carga exitosa de ${esquema}.`);
+        return true;
+    } catch (err) {
+        console.error(`Error durante la carga inicial de ${esquema}:\n`, err);
+        throw new Error(
+            `Error durante la carga inicial de ${esquema}: ${err.message}`
         );
     }
 }

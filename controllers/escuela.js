@@ -1,3 +1,4 @@
+const Rol = require("../objects/rolEnum");
 var mongoose = require("mongoose");
 var Alumno = mongoose.model("Alumno");
 var Usuario = mongoose.model("Usuario");
@@ -32,34 +33,41 @@ exports.login = async function (req, res) {
         const usuarioRecuperado = await Usuario.findOne({ usuario: usuario });
 
         if (!usuarioRecuperado) {
+            console.log("Login fallido: Usuario no encontrado.");
             return res
                 .status(400)
                 .render("index", { error: "Usuario no encontrado" });
-        } else {
-            if (usuarioRecuperado.clave === contrasena) {
-                console.log(usuarioRecuperado)
-                switch (usuarioRecuperado.rol)
-                {
-                    case "alumno":
-                        const alumnoRecuperado = await Alumno.findOne({ usuario: usuarioRecuperado._id });
-                        return res.render("alumno", {alumno : alumnoRecuperado});
-                        break;
-                    case "administrador":
-                        console.log("Bienvenido a la sección de administradores")
-                    break;
-                    case "profesor":
-                        console.log("Bienvenido a la sección de profesores")
-                        break;
-                }
-                return res.redirect("/app");
-            } else {
-                return res
-                    .status(400)
-                    .render("index", { error: "Contraseña incorrecta" });
-            }
         }
-    } catch (error) {
-        console.log("entro al catch");
-        res.status(500).send("Error interno del servidor");
+
+        if (usuarioRecuperado.clave != contrasena) {
+            console.log("Login fallido: Contraseña incorrecta.");
+            return res
+                .status(400)
+                .render("index", { error: "Contraseña incorrecta" });
+        }
+
+        console.log("Login exitoso");
+        await enrutar(usuarioRecuperado, res);
+    } catch (err) {
+        console.log("Error interno del servidor\n", err);
+        return res
+            .status(500)
+            .render("index", { error: "Error interno del servidor" });
     }
 };
+
+async function enrutar(usuario, res) {
+    switch (usuario.rol) {
+        case Rol.ALUMNO:
+            const alumnoRecuperado = await Alumno.findOne({
+                usuario: usuario._id,
+            });
+            return res.render("alumno", { alumno: alumnoRecuperado });
+        case Rol.ADMINISTRATIVO:
+            console.log("Bienvenido a la sección de administrativos");
+            break;
+        case Rol.PROFESOR:
+            console.log("Bienvenido a la sección de profesores");
+            break;
+    }
+}

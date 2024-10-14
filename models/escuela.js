@@ -15,14 +15,10 @@ const alumnoSchema = new Schema({
         type: String,
         required: true,
     },
-    padre: {
-        type: String,
-        required: true,
-    },
     usuario: {
         type: Number,
-        ref: 'Usuario',
-    }
+        ref: "Usuario",
+    },
 });
 
 // Esquema para Usuarios
@@ -42,7 +38,7 @@ const usuarioSchema = new Schema({
     rol: {
         type: String,
         required: true,
-    }
+    },
 });
 
 // Esquema para Cursos
@@ -56,13 +52,13 @@ const cursoSchema = new Schema({
     },
     alumno: {
         type: Schema.Types.ObjectId,
-        ref: 'Alumno',
+        ref: "Alumno",
     },
     calificacion: {
         type: Number,
         required: false,
         min: 0,
-        max: 10
+        max: 10,
     },
 });
 
