@@ -1,0 +1,21 @@
+extends ../layout
+
+block content
+    h3 Agregar Alumno
+
+    form(action="/alumnos", method="POST")
+        .form-group
+            label(for="nombre") Nombre:
+            input.form-control(type="text" name="nombre" required)
+        .form-group
+            label(for="apellido") Apellido:
+            input.form-control(type="text" name="apellido" required)
+        .form-group
+            label(for="usuarioNombre") Usuario:
+            input.form-control(type="text" name="usuarioNombre" required)
+        .form-group
+            label(for="usuarioClave") Clave:
+            input.form-control(type="password" name="usuarioClave" required)
+        button.btn.btn-success(type="submit") Guardar
+
+    a.btn.btn-secondary.mt-3(href="/administrativo/alumnos") Volver a la lista

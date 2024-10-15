@@ -3,28 +3,46 @@ var mongoose = require("mongoose");
 var Alumno = mongoose.model("Alumno");
 var Usuario = mongoose.model("Usuario");
 
-// Método para agregar a un alumno
-exports.addAlumno = async function (req, resp) {
-    try {
-        let nuevoAlumno = new Alumno({
-            nombre: req.body.nombre,
-        });
+// // Método para agregar a un alumno
+// exports.addAlumno = async function (req, resp) {
+//     try {
+//         let nuevoAlumno = new Alumno({
+//             nombre: req.body.nombre,
+//         });
 
-        await nuevoAlumno.save();
-        resp.status(201).json(nuevoAlumno);
-    } catch (err) {
-        resp.send(500, err.message);
-    }
-};
+//         await nuevoAlumno.save();
+//         resp.status(201).json(nuevoAlumno);
+//     } catch (err) {
+//         resp.send(500, err.message);
+//     }
+// };
 
-// Método para obtener todos los alumnos
-exports.getAlumnos = async function (req, resp) {
-    try {
-        const alumnos = await Alumno.find();
-        resp.status(200).json(alumnos);
-    } catch (err) {
-        resp.status(500).json({ error: err.message });
-    }
+// // Método para obtener todos los alumnos
+// exports.getAlumnos = async function (req, resp) {
+//     try {
+//         const alumnos = await Alumno.find();
+//         resp.status(200).json(alumnos);
+//     } catch (err) {
+//         resp.status(500).json({ error: err.message });
+//     }
+// };
+
+// exports.getAlumnos = async (req, res) => {
+//     try {
+//         console.log("Ingresando al CRUD de alumnos!");
+//         const alumnos = await Alumno.find().populate("usuario");
+//         console.log(alumnos);
+//         res.render("alumnos/index", { alumnos: alumnos });
+//     } catch (err) {
+//         console.log("Error interno del servidor\n", err);
+//         resp.status(500).render("index", {
+//             error: "Error interno del servidor",
+//         });
+//     }
+// };
+
+exports.index = async function (req, res) {
+    return res.render("index");
 };
 
 exports.login = async function (req, res) {
@@ -59,13 +77,14 @@ exports.login = async function (req, res) {
 async function enrutar(usuario, res) {
     switch (usuario.rol) {
         case Rol.ALUMNO:
+            console.log("Bienvenido a la sección de alumnos");
             const alumnoRecuperado = await Alumno.findOne({
                 usuario: usuario._id,
             });
-            return res.render("alumno", { alumno: alumnoRecuperado });
+            return res.render("menuAlumno", { alumno: alumnoRecuperado });
         case Rol.ADMINISTRATIVO:
             console.log("Bienvenido a la sección de administrativos");
-            break;
+            return res.redirect(`/administrativo?usuario=${usuario.usuario}`);
         case Rol.PROFESOR:
             console.log("Bienvenido a la sección de profesores");
             break;

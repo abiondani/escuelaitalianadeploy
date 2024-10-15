@@ -1,0 +1,25 @@
+extends ../layout
+
+block content
+    h3 Listado de Alumnos
+
+    table.table.table-striped
+        thead
+            tr
+                th Nombre
+                th Apellido
+                th Usuario
+                th Acciones
+        tbody
+            each alumno in alumnos
+                tr
+                    td= alumno.nombre
+                    td= alumno.apellido
+                    td= alumno.usuario.usuario
+                    td
+                        a.btn.btn-primary(href=`/administrativo/alumnos/edit/${alumno._id}`) Editar
+                        a.btn.btn-danger(href=`/administrativo/alumnos/delete/${alumno._id}`) Eliminar
+
+    a.btn.btn-success(href="/administrativo/alumnos/new") Agregar Alumno
+    br
+    a.btn.btn-secondary.mt-3(href="/administrativo") Volver al menú principal

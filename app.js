@@ -1,6 +1,5 @@
 const path = require("path");
 const fs = require("fs");
-const pug = require("pug");
 const mongoose = require("mongoose");
 const express = require("express");
 
@@ -13,8 +12,7 @@ const app = express();
 mongoose.connect("mongodb://localhost/escuela");
 require("./models/escuela");
 
-var alumno = express.Router();
-var AlumnoCtrl = require("./controllers/escuela");
+console.log("MongoDB.........[OK]");
 
 // Middlewares para procesar el body de requests HTTP.
 // urlencoded lo usamos para procesar los datos de los
@@ -22,22 +20,21 @@ var AlumnoCtrl = require("./controllers/escuela");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-alumno.route("/alumno").post(AlumnoCtrl.addAlumno);
-alumno.route("/alumno").get(AlumnoCtrl.getAlumnos);
-alumno.route("/login").post(AlumnoCtrl.login);
-
-app.use("/api", alumno);
+console.log("Middlewares.....[OK]");
 
 // Definimos a PUG como nuestro motor de plantillas.
 app.set("views", "./views");
 app.set("view engine", "pug");
 
-app.get("/", function (req, res) {
-    res.render("index");
-});
-app.get("/app", function (req, res) {
-    res.render("app");
-});
+console.log("Vistas..........[OK]");
+
+// Rutas
+const appRoutes = require("./routes/appRoutes");
+const administrativoRoutes = require("./routes/administrativoRoutes");
+app.use("/", appRoutes);
+app.use("/administrativo", administrativoRoutes);
+
+console.log("Rutas...........[OK]");
 
 // Iniciamos el servidor:puerto y precargamos datos de
 // prueba

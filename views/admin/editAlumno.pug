@@ -1,0 +1,25 @@
+extends layout
+
+block content
+    h3 Editar Alumno
+
+    form(action=`/alumnos/edit/${alumno._id}`, method="POST")
+        .form-group
+            label(for="nombre") Nombre:
+            input.form-control(type="text" name="nombre" value=alumno.nombre required)
+        .form-group
+            label(for="apellido") Apellido:
+            input.form-control(type="text" name="apellido" value=alumno.apellido required)
+        input(type="hidden" name="usuarioId" value=alumno.usuario)
+        input(type="hidden" name="_id" value=alumno._id)
+        .form-group
+            label(for="usuarioNombre") Usuario:
+            input.form-control(type="text" name="usuarioNombre" value=alumno.usuario.usuario required)
+        .form-group
+            label(for="usuarioClave") Clave:
+            input.form-control(type="password" name="usuarioClave" value=alumno.usuario.clave required)
+        input(type="hidden" name="usuarioRol" value=alumno.usuario.rol)            
+        button.btn.btn-primary(type="submit") Actualizar
+
+    a.btn.btn-secondary.mt-3(href="/alumnos") Volver a la lista
+
