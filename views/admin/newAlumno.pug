@@ -3,7 +3,7 @@ extends ../layout
 block content
     h3 Agregar Alumno
 
-    form(action="/alumnos", method="POST")
+    form(action="/administrativo/alumno", method="POST")
         .form-group
             label(for="nombre") Nombre:
             input.form-control(type="text" name="nombre" required)
