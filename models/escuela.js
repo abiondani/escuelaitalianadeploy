@@ -43,6 +43,10 @@ const usuarioSchema = new Schema({
 
 // Esquema para Cursos
 const cursoSchema = new Schema({
+    _id: {
+        type: Number,
+        required: true,
+    },
     materia: {
         type: String,
         required: true,
@@ -51,7 +55,7 @@ const cursoSchema = new Schema({
         type: String,
     },
     alumno: {
-        type: Schema.Types.ObjectId,
+        type: Number,
         ref: "Alumno",
     },
     calificacion: {

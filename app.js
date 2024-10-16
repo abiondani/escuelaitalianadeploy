@@ -46,6 +46,7 @@ async function iniciarApp() {
         // resultado=true, deja de cargar los esquemas siguientes.
         let resultado = await cargaInicial("usuarios.json", "Usuario");
         if (resultado) resultado = await cargaInicial("alumnos.json", "Alumno");
+        if (resultado) resultado = await cargaInicial("cursos.json", "Curso");
 
         // Inicia el servidor para escuchar requests HTTP.
         app.listen(PORT, () => {

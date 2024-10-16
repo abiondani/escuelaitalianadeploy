@@ -1,8 +1,44 @@
 [
     {
+        "_id": 30000001,
         "materia": "Matemáticas",
-        "profesor": "Pepe Grillo",
-        "alumno": "670c2fc6af569c25c52b62d3",
-        "calificacion": "2000001"
-    }
+        "profesor": "Vanina Sassi",
+        "alumno": 1000001,
+        "calificacion": 8
+    },
+    {
+        "_id": 30000002,
+        "materia": "Matemáticas",
+        "profesor": "Vanina Sassi",
+        "alumno": 1000002,
+        "calificacion": 0
+    },
+    {
+        "_id": 30000003,
+        "materia": "Matemáticas",
+        "profesor": "Vanina Sassi",
+        "alumno": 1000003,
+        "calificacion": 9
+    },
+    {
+        "_id": 30000004,
+        "materia": "Historia",
+        "profesor": "Vanina Sassi",
+        "alumno": 1000001,
+        "calificacion": 6
+    },
+    {
+        "_id": 30000005,
+        "materia": "Historia",
+        "profesor": "Vanina Sassi",
+        "alumno": 1000002,
+        "calificacion": 4
+    },
+    {
+        "_id": 30000006,
+        "materia": "Historia",
+        "profesor": "Vanina Sassi",
+        "alumno": 1000003,
+        "calificacion": 0
+    }    
 ]
