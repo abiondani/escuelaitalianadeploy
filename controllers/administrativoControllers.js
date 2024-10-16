@@ -10,9 +10,7 @@ exports.administrativo = async (req, res) => {
 
 exports.getAlumnos = async (req, res) => {
     try {
-        console.log("Ingresando al CRUD de alumnos!");
         const alumnos = await Alumno.find().populate("usuario");
-        console.log(alumnos);
         res.render("admin/listAlumno", { alumnos: alumnos });
     } catch (err) {
         console.log("Error interno del servidor\n", err);
@@ -65,11 +63,8 @@ exports.addAlumno = async (req, res) => {
 };
 
 exports.delAlumno = async (req, res) => {
-    console.log("Alumno dado de baja!!!");
-    console.log(req.params.id);
     try {
         const alumno = await Alumno.findById(req.params.id);
-        console.log("Pase!");
         await Alumno.deleteOne({ _id: alumno._id });
         await Usuario.deleteOne({ _id: alumno.usuario });
         res.redirect("/administrativo/alumnos");

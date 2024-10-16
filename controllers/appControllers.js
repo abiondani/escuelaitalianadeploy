@@ -78,10 +78,7 @@ async function enrutar(usuario, res) {
     switch (usuario.rol) {
         case Rol.ALUMNO:
             console.log("Bienvenido a la sección de alumnos");
-            const alumnoRecuperado = await Alumno.findOne({
-                usuario: usuario._id,
-            });
-            return res.render("menuAlumno", { alumno: alumnoRecuperado });
+            return res.redirect(`/alumno?usuario=${usuario._id}`);
         case Rol.ADMINISTRATIVO:
             console.log("Bienvenido a la sección de administrativos");
             return res.redirect(`/administrativo?usuario=${usuario.usuario}`);

@@ -1,4 +1,22 @@
 extends layout
 
 block content
-  h3 Bienvenido #{alumno.nombre} #{alumno.apellido}
+    h3 Notas de #{alumno.nombre} #{alumno.apellido}
+    if cursos && cursos.length > 0
+        table.table.table-striped
+            thead
+                tr
+                    th Materia
+                    th Profesor
+                    th Calificación
+            tbody
+                each curso in cursos
+                    tr
+                        td= curso.materia
+                        td= curso.profesor
+                        td= curso.calificacion
+    else
+        br
+        .alert.alert-warning(role="alert") El alumno no posee notas
+
+    a.btn.btn-secondary.mt-3(href="/") Salir

@@ -3,42 +3,56 @@
         "_id": 30000001,
         "materia": "Matemáticas",
         "profesor": "Vanina Sassi",
-        "alumno": 1000001,
-        "calificacion": 8
+        "alumno": 2000001,
+        "calificacion": 5
     },
     {
         "_id": 30000002,
         "materia": "Matemáticas",
         "profesor": "Vanina Sassi",
-        "alumno": 1000002,
+        "alumno": 2000002,
         "calificacion": 0
     },
     {
         "_id": 30000003,
-        "materia": "Matemáticas",
+        "materia": "Geografía",
         "profesor": "Vanina Sassi",
-        "alumno": 1000003,
-        "calificacion": 9
+        "alumno": 2000001,
+        "calificacion": 0
     },
     {
         "_id": 30000004,
         "materia": "Historia",
         "profesor": "Vanina Sassi",
-        "alumno": 1000001,
+        "alumno": 2000002,
         "calificacion": 6
     },
     {
         "_id": 30000005,
-        "materia": "Historia",
+        "materia": "Física",
         "profesor": "Vanina Sassi",
-        "alumno": 1000002,
-        "calificacion": 4
+        "alumno": 2000001,
+        "calificacion": 10
     },
     {
         "_id": 30000006,
-        "materia": "Historia",
+        "materia": "Física",
         "profesor": "Vanina Sassi",
-        "alumno": 1000003,
+        "alumno": 2000002,
+        "calificacion": 1
+    },
+    {
+        "_id": 30000007,
+        "materia": "Química",
+        "profesor": "Vanina Sassi",
+        "alumno": 2000001,
         "calificacion": 0
-    }    
+    },
+    {
+        "_id": 30000008,
+        "materia": "Química",
+        "profesor": "Vanina Sassi",
+        "alumno": 2000002,
+        "calificacion": 8
+    }        
 ]
