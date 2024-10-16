@@ -27,8 +27,6 @@ exports.newAlumno = async (req, res) => {
 };
 
 exports.addAlumno = async (req, res) => {
-    console.log("Alumno dado de alta!!!");
-    console.log(req.body);
     try {
         const { nombre, apellido, usuarioNombre, usuarioClave } = req.body;
 
@@ -54,12 +52,33 @@ exports.addAlumno = async (req, res) => {
             usuario: nuevoUsuarioId,
         });
         await nuevoAlumno.save();
+        res.redirect("/administrativo/alumnos");
     } catch (err) {
         console.log(
             "Error interno del servidor al dar de alta un alumno\n",
             err
         );
         res.status(500).render("admin/newAlumno", {
+            error: "Error interno del servidor",
+        });
+    }
+};
+
+exports.delAlumno = async (req, res) => {
+    console.log("Alumno dado de baja!!!");
+    console.log(req.params.id);
+    try {
+        const alumno = await Alumno.findById(req.params.id);
+        console.log("Pase!");
+        await Alumno.deleteOne({ _id: alumno._id });
+        await Usuario.deleteOne({ _id: alumno.usuario });
+        res.redirect("/administrativo/alumnos");
+    } catch (err) {
+        console.log(
+            "Error interno del servidor al dar de baja un alumno\n",
+            err
+        );
+        res.status(500).render("admin/delAlumno", {
             error: "Error interno del servidor",
         });
     }
