@@ -1,25 +1,58 @@
-extends layout
+extends ../layout
 
 block content
     h3 Editar Alumno
 
-    form(action=`/alumnos/edit/${alumno._id}`, method="POST")
+    form(action=`/administrativo/alumno/update/${alumno._id}`, method="POST")
+        input(type="hidden" name="usuarioId" value=alumno.usuario._id)
+        input(type="hidden" name="_id" value=alumno._id)
         .form-group
             label(for="nombre") Nombre:
             input.form-control(type="text" name="nombre" value=alumno.nombre required)
         .form-group
             label(for="apellido") Apellido:
             input.form-control(type="text" name="apellido" value=alumno.apellido required)
-        input(type="hidden" name="usuarioId" value=alumno.usuario)
-        input(type="hidden" name="_id" value=alumno._id)
         .form-group
             label(for="usuarioNombre") Usuario:
             input.form-control(type="text" name="usuarioNombre" value=alumno.usuario.usuario required)
         .form-group
             label(for="usuarioClave") Clave:
-            input.form-control(type="password" name="usuarioClave" value=alumno.usuario.clave required)
-        input(type="hidden" name="usuarioRol" value=alumno.usuario.rol)            
-        button.btn.btn-primary(type="submit") Actualizar
+            input.form-control(type="password" name="usuarioClave" value=alumno.usuario.clave required)    
+        button#guardar.btn.btn-success(type="submit") Actualizar
 
-    a.btn.btn-secondary.mt-3(href="/alumnos") Volver a la lista
+    if success
+        .alert.alert-success(role="alert")
+            | #{success}.
+        p.small.text-muted.mt-3
+            | Redirigiendo en 
+            span#cuenta-regresiva 3
+            |  segundos...            
+
+        script.
+            var countdownElement = document.getElementById('cuenta-regresiva');
+            var secondsRemaining = 3;
+
+            function updateCountdown() {
+                if (secondsRemaining > 0) {
+                    countdownElement.textContent = secondsRemaining;
+                    secondsRemaining--;
+                } else {
+                    window.location.href = "/administrativo/alumnos";
+                }
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+                document.getElementById('guardar').disabled = true;
+                const volver = document.getElementById('volver');
+                volver.classList.add('disabled');
+                volver.addEventListener('click', function(event) {
+                    event.preventDefault();
+                });
+                setInterval(updateCountdown, 1000);
+            });
+    if error
+        .alert.alert-danger(role="alert")
+            | #{error}
+
+    a#volver.btn.btn-secondary.mt-3(href="/administrativo/alumnos") Volver a la lista
 

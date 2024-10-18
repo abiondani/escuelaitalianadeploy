@@ -6,20 +6,47 @@ block content
     table.table.table-striped
         thead
             tr
-                th Nombre
                 th Apellido
+                th Nombre
                 th Usuario
                 th Acciones
         tbody
             each alumno in alumnos
                 tr
-                    td= alumno.nombre
                     td= alumno.apellido
+                    td= alumno.nombre
                     td= alumno.usuario.usuario
                     td
                         a.btn.btn-primary(href=`/administrativo/alumno/edit/${alumno._id}`) Editar
-                        a.btn.btn-danger(href=`/administrativo/alumno/delete/${alumno._id}`) Eliminar
+                        a.btn.btn-danger(href="#" onclick=`confirmarEliminacion(${alumno._id}, "${alumno.apellido}, ${alumno.nombre}")`) Eliminar
 
     a.btn.btn-success(href="/administrativo/alumnos/new") Agregar Alumno
     br
     a.btn.btn-secondary.mt-3(href="/administrativo") Volver al menú principal
+
+    //- Modal para confirmar eliminación
+    .modal.fade#confirmarEliminacionModal(tabindex="-1" role="dialog")
+        .modal-dialog(role="document")
+            .modal-content
+                .modal-header
+                    h5.modal-title Escuela Italiana
+                    button.close(type="button" data-dismiss="modal" aria-label="Close")
+                        span(aria-hidden="true") &times;
+                .modal-body
+                    p ¿Estás seguro de que deseas eliminar el alumno <strong id="nombreAlumno"></strong>?
+                .modal-footer
+                    button.btn.btn-secondary(type="button" data-dismiss="modal") Cancelar
+                    button.btn.btn-danger(type="button" id="confirmarEliminacionBtn") Eliminar
+
+    script.
+        function confirmarEliminacion(id, nombre) {
+            document.getElementById('nombreAlumno').innerText = nombre;
+
+            // Mostrar el modal
+            $('#confirmarEliminacionModal').modal('show');
+
+            // El botón de eliminar 
+            document.getElementById('confirmarEliminacionBtn').onclick = function () {
+                window.location.href = `/administrativo/alumno/delete/${id}`;
+            };
+        }

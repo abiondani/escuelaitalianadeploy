@@ -9,5 +9,7 @@ router.post("/alumno", administrativoController.addAlumno);
 router.get("/alumno/delete/:id", administrativoController.delAlumno);
 router.get("/inscripcion/:usuario", administrativoController.getCursos);
 
+router.get("/alumno/edit/:id", administrativoController.editAlumno);
+router.post("/alumno/update/:id", administrativoController.updateAlumno);
 
 module.exports = router;
