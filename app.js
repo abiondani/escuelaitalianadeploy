@@ -17,7 +17,7 @@ console.log("MongoDB.........[OK]");
 // Middlewares para procesar el body de requests HTTP.
 // urlencoded lo usamos para procesar los datos de los
 // formularios.
-app.use(express.json());
+//app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 console.log("Middlewares.....[OK]");

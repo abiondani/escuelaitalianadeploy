@@ -16,6 +16,40 @@ block content
         .form-group
             label(for="usuarioClave") Clave:
             input.form-control(type="password" name="usuarioClave" required)
-        button.btn.btn-success(type="submit") Guardar
+        button#guardar.btn.btn-success(type="submit") Guardar
 
-    a.btn.btn-secondary.mt-3(href="/administrativo/alumnos") Volver a la lista
+    if success
+        .alert.alert-success(role="alert")
+            | #{success}.
+        p.small.text-muted.mt-3
+            | Redirigiendo en 
+            span#cuenta-regresiva 3
+            |  segundos...            
+
+        script.
+            var countdownElement = document.getElementById('cuenta-regresiva');
+            var secondsRemaining = 3;
+
+            function updateCountdown() {
+                if (secondsRemaining > 0) {
+                    countdownElement.textContent = secondsRemaining;
+                    secondsRemaining--;
+                } else {
+                    window.location.href = "/administrativo/alumnos";
+                }
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+                document.getElementById('guardar').disabled = true;
+                const volver = document.getElementById('volver');
+                volver.classList.add('disabled');
+                volver.addEventListener('click', function(event) {
+                    event.preventDefault();
+                });
+                setInterval(updateCountdown, 1000);
+            });
+    if error
+        .alert.alert-danger(role="alert")
+            | #{error}
+
+    a#volver.btn.btn-secondary.mt-3(href="/administrativo/alumnos") Volver a la lista

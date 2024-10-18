@@ -7,7 +7,10 @@ exports.getCursos = async (req, res) => {
         const alumno = await Alumno.findOne({ usuario: req.query.usuario });
         let cursos;
         if (alumno) {
-            cursos = await Curso.find({ alumno: alumno._id });
+            cursos = await Curso.find({ alumno: alumno._id }).sort({
+                materia: 1,
+                calificacion: 1,
+            });
         }
         res.render("menuAlumno", { alumno: alumno, cursos: cursos });
     } catch (err) {
