@@ -1,0 +1,23 @@
+extends ../layout
+
+block content
+    h3 Listado de cursos
+
+    table.table.table-striped
+        thead
+            tr
+                th Alumno
+                th Profesor
+                th Materia
+                th Nota
+                th Acciones
+        tbody
+            each curso in cursos
+                tr
+                    td= curso.alumno.apellido + ", " + curso.alumno.nombre
+                    td= curso.profesor
+                    td= curso.materia
+                    th= curso.calificacion
+                    td
+                        a.btn.btn-primary(href=`/profesor/agregarNota/${curso._id}`) Editar
+                        a.btn.btn-primary(href=`/profesor/agregarNota/${curso._id}`) Dar de baja

@@ -2,6 +2,7 @@ const Rol = require("../objects/rolEnum");
 var mongoose = require("mongoose");
 var Alumno = mongoose.model("Alumno");
 var Usuario = mongoose.model("Usuario");
+var Curso = mongoose.model("Curso");
 
 exports.administrativo = async (req, res) => {
     const usuario = req.query;
@@ -74,6 +75,78 @@ exports.delAlumno = async (req, res) => {
             err
         );
         res.status(500).render("admin/delAlumno", {
+            error: "Error interno del servidor",
+        });
+    }
+};
+
+exports.formularioInscripcion = async(req,res) => {
+    res.render("admin/newCurso");
+}
+
+
+exports.addCurso = async (req, res) => {
+    try {
+        
+        const { idAlumno, materia, profesor } = req.body;
+        const alumnoEncontrado = await Alumno.findById(idAlumno);
+        if (alumnoEncontrado) {
+            const ultimoCurso = await Curso.findOne().sort({ _id: -1 });
+            const nuevoCursoId = ultimoCurso ? ultimoCurso._id + 1 : 1;
+
+            const nuevoCurso = new Curso({
+                _id: nuevoCursoId,
+                materia: materia,
+                profesor: profesor,
+                alumno: idAlumno,
+                calificacion: 0,
+            });
+            await nuevoCurso.save();
+            res.redirect("/administrativo");
+        } else {
+            return res
+                .status(400)
+                .render("admin/newCurso", { error: "ID de Alumno incorrecto" });
+        }
+        
+        
+    } catch (err) {
+        console.log(
+            "Error interno del servidor al inscribir a un curso\n",
+            err
+        );
+        res.status(500).render("admin/newCurso", {
+            error: "Error interno del servidor",
+        });
+    }
+};
+
+
+exports.getCursos = async (req, res) => {
+    try {
+        const cursos = await Curso.find().populate("alumno").sort( {materia: 1});
+        cursos.sort( (a, b) => {
+            
+            if (a.alumno.apellido < b.alumno.apellido)
+                return -1;
+            else if (a.alumno.apellido > b.alumno.apellido)
+                return 1;
+            else return 0;
+        });
+        console.log(cursos);
+     
+        const usuario = await Usuario.findOne({usuario: req.params.usuario });
+        
+        if (usuario.rol == Rol.PROFESOR) {
+            res.render("menuProfesor", { usuario: usuario , cursos: cursos });
+        } else {
+            res.render("admin/listCurso", { usuario: usuario, cursos: cursos }); 
+        }
+        
+               
+    } catch (err) {
+        console.log("Error interno del servidor\n", err);
+        res.status(500).render("menuProfesor", {
             error: "Error interno del servidor",
         });
     }

@@ -32,9 +32,11 @@ console.log("Vistas..........[OK]");
 const appRoutes = require("./routes/appRoutes");
 const administrativoRoutes = require("./routes/administrativoRoutes");
 const alumnoRoutes = require("./routes/alumnoRoutes");
+const profesorRoutes = require("./routes/profesorRoutes");
 app.use("/", appRoutes);
 app.use("/administrativo", administrativoRoutes);
 app.use("/alumno", alumnoRoutes);
+app.use("/profesor", profesorRoutes);
 
 console.log("Rutas...........[OK]");
 

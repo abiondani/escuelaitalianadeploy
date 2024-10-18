@@ -84,6 +84,6 @@ async function enrutar(usuario, res) {
             return res.redirect(`/administrativo?usuario=${usuario.usuario}`);
         case Rol.PROFESOR:
             console.log("Bienvenido a la sección de profesores");
-            break;
+            return res.redirect(`/profesor/${usuario.usuario}`);
     }
 }
