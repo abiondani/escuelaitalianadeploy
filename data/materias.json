@@ -1,0 +1,30 @@
+[
+    {
+        "_id": 6000001,
+        "nombre": "Matemáticas"
+    },
+    {
+        "_id": 6000002,
+        "nombre": "Geografía"
+    },
+    {
+        "_id": 6000003,
+        "nombre": "Historia"
+    },
+    {
+        "_id": 6000004,
+        "nombre": "Cívica"
+    },
+    {
+        "_id": 6000005,
+        "nombre": "Literatura"
+    },
+    {
+        "_id": 6000006,
+        "nombre": "Física"
+    },
+    {
+        "_id": 6000007,
+        "nombre": "Química"
+    }    
+]

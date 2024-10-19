@@ -6,17 +6,17 @@ block content
     table.table.table-striped
         thead
             tr
-                th Alumno
-                th Profesor
                 th Materia
+                th Alumno
+                th Profesor            
                 th Nota
                 th Acciones
         tbody
             each curso in cursos
-                tr
-                    td= curso.alumno.apellido + ", " + curso.alumno.nombre
-                    td= curso.profesor
+                tr  
                     td= curso.materia
+                    td= curso.alumno.apellido + ", " + curso.alumno.nombre
+                    td= curso.profesor                    
                     th= curso.calificacion
                     td
                         a.btn.btn-primary(href=`/administrativo/${usuario.usuario}/curso/edit/${curso._id}`) Editar
@@ -24,9 +24,7 @@ block content
                         
 
     br
-    a.btn.btn-success(href=`/administrativo/${usuario.usuario}/curso/new`) Inscribir Alumno
-    br
-    a.btn.btn-secondary.mt-3(href=`/profesor/${usuario.usuario}`) Volver al menú anterior
+    a.btn.btn-secondary.mt-3(href=`/administrativo/${usuario.usuario}`) Volver al menú anterior
 
 
     //- Modal para confirmar eliminación

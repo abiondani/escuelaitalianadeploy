@@ -4,7 +4,8 @@ const profesorControllers = require("../controllers/profesorControllers");
 const administrativoController = require("../controllers/administrativoControllers");
 
 router.get("/:usuario", administrativoController.getCursos);
-//router.get("/agregarNota/:id", profesorControllers.editCurso);
+router.get("/:usuario/agregarNota/:id", profesorControllers.editCurso);
+router.post("/:usuario/curso/update/:id", administrativoController.updateCurso);
 
 
 module.exports = router;

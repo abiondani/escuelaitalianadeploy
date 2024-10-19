@@ -3,20 +3,17 @@ var Alumno = mongoose.model("Alumno");
 var Curso = mongoose.model("Curso");
 
 
-exports.getCursos = async (req, res) => {
+exports.editCurso = async (req, res) => {
     try {
-        const cursos = await Curso.find({calificacion: 0}).populate("alumno");
-        const usuario = req.query;
-        res.render("menuProfesor", { usuario, cursos: cursos });        
+        const curso = await Curso.findById(req.params.id).populate("alumno");
+        res.render("profesor/editCurso", { curso: curso, usuario: req.params.usuario });
     } catch (err) {
-        console.log("Error interno del servidor\n", err);
-        res.status(500).render("menuProfesor", {
+        console.log(
+            "Error interno del servidor al encontrar el curso\n",
+            err
+        );
+        res.status(500).render("admin/delAlumno", {
             error: "Error interno del servidor",
         });
     }
-};
-
-exports.editCurso = async (req, res) => {
-
-    console.log("prueba");
 };

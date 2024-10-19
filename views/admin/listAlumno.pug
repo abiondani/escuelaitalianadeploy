@@ -19,6 +19,7 @@ block content
                     td
                         a.btn.btn-primary(href=`/administrativo/${usuario}/alumno/edit/${alumno._id}`) Editar
                         a.btn.btn-danger(href="#" onclick=`confirmarEliminacion(${alumno._id}, "${alumno.apellido}, ${alumno.nombre}" ,"${usuario}")`) Eliminar
+                        a.btn.btn-primary(href=`/administrativo/${usuario}/curso/new/${alumno._id}`) Inscribir a curso
 
     a.btn.btn-success(href=`/administrativo/${usuario}/alumnos/new`) Agregar Alumno
     br

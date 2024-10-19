@@ -3,13 +3,15 @@ extends ../layout
 block content
     h3 Inscripción a curso
 
-    form(action=`/administrativo/${usuario}/curso/new`, method="POST")
+    form(action=`/administrativo/${usuario}/curso/new/${id}`, method="POST")
         .form-group
             label(for="idAlumno") ID Alumno:
-            input.form-control(type="number" name="idAlumno" required)
+            input.form-control(type="number" name="idAlumno" value=id required readonly=true)
         .form-group
-            label(for="materia") Materia:
-            input.form-control(type="text" name="materia" required)
+            label(for="materia") Curso:
+            select.form-control(name="materia" id="materia" required)
+                each materia in materias
+                    option(value=materia.nombre selected=(index === 0)) #{materia.nombre}
         .form-group
             label(for="profesor") Profesor:
             input.form-control(type="text" name="profesor" required)
@@ -19,4 +21,4 @@ block content
             br
             .alert.alert-danger(role="alert") #{error}
 
-    a.btn.btn-secondary.mt-3(href=`/administrativo/${usuario}/cursos`) Volver al menú anterior
+    a.btn.btn-secondary.mt-3(href=`/administrativo/${usuario}/alumnos`) Volver al menú anterior

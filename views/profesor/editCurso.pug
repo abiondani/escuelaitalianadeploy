@@ -3,8 +3,8 @@ extends ../layout
 block content
     h3 Editar Curso
 
-    form(action=`/administrativo/${usuario}/curso/update/${curso._id}`, method="POST")
-        
+    form(action=`/profesor/${usuario}/curso/update/${curso._id}`, method="POST")
+        input(type="hidden" name="_id" value=curso._id)
         .form-group
             label(for="alumnoID") ID de Alumno:
             input.form-control(type="number" name="alumnoID" value=curso.alumno._id required readonly=true)
@@ -15,15 +15,16 @@ block content
             label(for="apellido") Apellido:
             input.form-control(type="text" name="apellido" value=curso.alumno.apellido required  readonly=true)
         .form-group
-            label(for="materia") Curso:
-            select.form-control(name="materia" id="materia" required)
-                each materia in materias
-                    option(value=materia.nombre selected=(materia.nombre === curso.materia)) #{materia.nombre}
+            label(for="materia") Materia:
+            input.form-control(type="text" name="materia" value=curso.materia required readonly=true)
         .form-group
             label(for="profesor") Profesor:
-            input.form-control(type="text" name="profesor" value=curso.profesor required)    
+            input.form-control(type="text" name="profesor" value=curso.profesor required readonly=true)
+        .form-group
+            label(for="calificacion") Calificacion:
+            input.form-control(type="number" name="calificacion" value=curso.calificacion required)        
         button#guardar.btn.btn-success(type="submit") Actualizar
-
+    
     if success
         .alert.alert-success(role="alert")
             | #{success}.
@@ -42,7 +43,7 @@ block content
                     countdownElement.textContent = secondsRemaining;
                     secondsRemaining--;
                 } else {
-                    window.location.href = `/administrativo/${usuario}/cursos`;
+                    window.location.href = `/profesor/${usuario}`;
                 }
             }
 
@@ -59,4 +60,4 @@ block content
         .alert.alert-danger(role="alert")
             | #{error}
 
-    a#volver.btn.btn-secondary.mt-3(href=`/administrativo/${usuario}/cursos`) Volver a la lista
+    a#volver.btn.btn-secondary.mt-3(href=`/profesor/${usuario}`) Volver a la lista

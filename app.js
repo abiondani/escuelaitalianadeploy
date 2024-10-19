@@ -51,7 +51,7 @@ async function iniciarApp() {
         let resultado = await cargaInicial("usuarios.json", "Usuario");
         if (resultado) resultado = await cargaInicial("alumnos.json", "Alumno");
         if (resultado) resultado = await cargaInicial("cursos.json", "Curso");
-
+        if (resultado) resultado = await cargaInicial("materias.json", "Materia");
         // Inicia el servidor para escuchar requests HTTP.
         app.listen(PORT, () => {
             console.log(
