@@ -19,5 +19,41 @@ block content
                     td= curso.materia
                     th= curso.calificacion
                     td
-                        a.btn.btn-primary(href=`/profesor/agregarNota/${curso._id}`) Editar
-                        a.btn.btn-primary(href=`/profesor/agregarNota/${curso._id}`) Dar de baja
+                        a.btn.btn-primary(href=`/administrativo/${usuario.usuario}/curso/edit/${curso._id}`) Editar
+                        a.btn.btn-danger(href="#" onclick=`confirmarEliminacion("${usuario.usuario}",${curso._id}, "${curso.alumno.apellido}, ${curso.alumno.nombre}", "${curso.materia}")`) Dar de baja
+                        
+
+    br
+    a.btn.btn-success(href=`/administrativo/${usuario.usuario}/curso/new`) Inscribir Alumno
+    br
+    a.btn.btn-secondary.mt-3(href=`/profesor/${usuario.usuario}`) Volver al menú anterior
+
+
+    //- Modal para confirmar eliminación
+    .modal.fade#confirmarEliminacionModal(tabindex="-1" role="dialog")
+        .modal-dialog(role="document")
+            .modal-content
+                .modal-header
+                    h5.modal-title Escuela Italiana
+                    button.close(type="button" data-dismiss="modal" aria-label="Close")
+                        span(aria-hidden="true") &times;
+                .modal-body
+                    p ¿Estás seguro de que deseas eliminar el alumno <strong id="nombreAlumno"></strong> de la materia <strong id="materia"></strong> ?
+                .modal-footer
+                    button.btn.btn-secondary(type="button" data-dismiss="modal") Cancelar
+                    button.btn.btn-danger(type="button" id="confirmarEliminacionBtn") Eliminar
+
+    script.
+        function confirmarEliminacion(usuario,id, nombre, materia) {
+            document.getElementById('nombreAlumno').innerText = nombre;
+            document.getElementById('materia').innerText = materia;
+
+            // Mostrar el modal
+            $('#confirmarEliminacionModal').modal('show');
+            console.log(usuario);
+            console.log(id);
+            // El botón de eliminar 
+            document.getElementById('confirmarEliminacionBtn').onclick = function () {
+                window.location.href = `/administrativo/${usuario}/curso/delete/${id}`;
+            };
+        }

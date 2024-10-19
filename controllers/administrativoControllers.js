@@ -6,8 +6,7 @@ var Curso = mongoose.model("Curso");
 var Curso = mongoose.model("Curso");
 
 exports.administrativo = async (req, res) => {
-    const usuario = req.query;
-    res.render("menuAdmin", { usuario });
+    res.render("menuAdmin", { usuario: req.params.usuario });
 };
 
 exports.getAlumnos = async (req, res) => {
@@ -15,7 +14,7 @@ exports.getAlumnos = async (req, res) => {
         const alumnos = await Alumno.find()
             .populate("usuario")
             .sort({ apellido: 1 });
-        res.render("admin/listAlumno", { alumnos: alumnos });
+        res.render("admin/listAlumno", { alumnos: alumnos, usuario: req.params.usuario });
     } catch (err) {
         console.log("Error interno del servidor\n", err);
         res.status(500).render("admin/listAlumno", {
@@ -25,7 +24,7 @@ exports.getAlumnos = async (req, res) => {
 };
 
 exports.newAlumno = async (req, res) => {
-    res.render("admin/newAlumno");
+    res.render("admin/newAlumno", {usuario: req.params.usuario});
 };
 
 exports.addAlumno = async (req, res) => {
@@ -55,7 +54,7 @@ exports.addAlumno = async (req, res) => {
         });
         await nuevoAlumno.save();
 
-        res.render("admin/newAlumno", { success: "Alta de alumno exitosa" });
+        res.render("admin/newAlumno", { success: "Alta de alumno exitosa",usuario: req.params.usuario });
     } catch (err) {
         console.log(
             "Error interno del servidor al dar de alta un alumno\n",
@@ -73,20 +72,21 @@ exports.delAlumno = async (req, res) => {
         await Alumno.deleteOne({ _id: alumno._id });
         await Usuario.deleteOne({ _id: alumno.usuario });
         await Curso.deleteMany({ alumno: alumno._id });
-        res.redirect("/administrativo/alumnos");
+        res.redirect(`/administrativo/${req.params.usuario}/alumnos`);
     } catch (err) {
         console.log(
             "Error interno del servidor al dar de baja un alumno\n",
             err
         );
-        res.status(500).render("admin/delAlumno", {
+        res.status(500).render("admin/listAlumno", {
             error: "Error interno del servidor",
+            usuario: req.params.usuario,
         });
     }
 };
 
 exports.formularioInscripcion = async(req,res) => {
-    res.render("admin/newCurso");
+    res.render("admin/newCurso",{ usuario: req.params.usuario });
 }
 
 
@@ -107,11 +107,11 @@ exports.addCurso = async (req, res) => {
                 calificacion: 0,
             });
             await nuevoCurso.save();
-            res.redirect("/administrativo");
+            res.redirect(`/administrativo/${req.params.usuario}/cursos`);
         } else {
             return res
                 .status(400)
-                .render("admin/newCurso", { error: "ID de Alumno incorrecto" });
+                .render("admin/newCurso", { error: "ID de Alumno incorrecto", usuario: req.params.usuario });
         }
         
         
@@ -141,7 +141,7 @@ exports.getCursos = async (req, res) => {
         console.log(cursos);
      
         const usuario = await Usuario.findOne({usuario: req.params.usuario });
-        
+        console.log(usuario);
         if (usuario.rol == Rol.PROFESOR) {
             res.render("menuProfesor", { usuario: usuario , cursos: cursos });
         } else {
@@ -157,13 +157,28 @@ exports.getCursos = async (req, res) => {
     }
 };
 
-exports.editAlumno = async (req, res) => {
+exports.delCurso = async (req, res) => {
     try {
-        const alumno = await Alumno.findById(req.params.id).populate("usuario");
-        res.render("admin/editAlumno", { alumno: alumno });
+        await Curso.deleteOne({ _id: req.params.id });
+        res.redirect(`/administrativo/${req.params.usuario}/cursos`);
     } catch (err) {
         console.log(
-            "Error interno del servidor al dar de baja un alumno\n",
+            "Error interno del servidor al dar de baja un alumno en un curso\n",
+            err
+        );
+        res.status(500).render("admin/listCurso", {
+            error: "Error interno del servidor",
+        });
+    }
+};
+
+exports.editCurso = async (req, res) => {
+    try {
+        const curso = await Curso.findById(req.params.id).populate("alumno");
+        res.render("admin/editCurso", { curso: curso, usuario: req.params.usuario });
+    } catch (err) {
+        console.log(
+            "Error interno del servidor al encontrar el curso\n",
             err
         );
         res.status(500).render("admin/delAlumno", {
@@ -172,10 +187,53 @@ exports.editAlumno = async (req, res) => {
     }
 };
 
+exports.updateCurso = async (req, res) => {
+    try {
+        const {
+            _id,
+            alumnoID,
+            materia,
+            profesor,
+        } = req.body;
+
+        await Curso.updateOne(
+            { _id },
+            {  materia, profesor, alumno: alumnoID }
+        );
+
+        const curso = await Curso.findById(_id).populate("alumno");
+        
+        res.render("admin/editCurso", { curso: curso, usuario: req.params.usuario });
+    
+    } catch (err) {
+        console.log(
+            "Error interno del servidor al actualizar un curso\n",
+            err
+        );
+        res.status(500).render("admin/editCurso", {
+            error: "Error interno del servidor",
+        });
+    }
+};
+
+exports.editAlumno = async (req, res) => {
+    try {
+        const alumno = await Alumno.findById(req.params.id).populate("usuario");
+        res.render("admin/editAlumno", { alumno: alumno, usuario: req.params.usuario });
+    } catch (err) {
+        console.log(
+            "Error interno del servidor al dar de baja un alumno\n",
+            err
+        );
+        res.status(500).render("admin/editAlumno", {
+            error: "Error interno del servidor",
+            alumno: alumno,
+            usuario: req.params.usuario,
+        });
+    }
+};
+
 exports.updateAlumno = async (req, res) => {
-    console.log("========================= update post!");
-    console.log(req.body);
-    console.log("========================= update post!");
     try {
         const {
             _id,
@@ -194,10 +252,11 @@ exports.updateAlumno = async (req, res) => {
         await Alumno.updateOne({ _id }, { nombre, apellido });
 
         const alumno = await Alumno.findById(_id).populate("usuario");
-        console.log(alumno);
+       
         res.render("admin/editAlumno", {
             alumno: alumno,
             success: "Actualización de alumno exitosa",
+            usuario: req.params.usuario,
         });
     } catch (err) {
         console.log(
@@ -206,6 +265,8 @@ exports.updateAlumno = async (req, res) => {
         );
         res.status(500).render("admin/editAlumno", {
             error: "Error interno del servidor",
+            alumno: alumno,
+            usuario: req.params.usuario,
         });
     }
 };

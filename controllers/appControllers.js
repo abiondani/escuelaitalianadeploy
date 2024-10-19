@@ -42,7 +42,7 @@ async function evaluarRol(usuario, res) {
             return res.redirect(`/alumno?usuario=${usuario._id}`);
         case Rol.ADMINISTRATIVO:
             console.log("Bienvenido a la sección de administrativos");
-            return res.redirect(`/administrativo?usuario=${usuario.usuario}`);
+            return res.redirect(`/administrativo/${usuario.usuario}`);
         case Rol.PROFESOR:
             console.log("Bienvenido a la sección de profesores");
             return res.redirect(`/profesor/${usuario.usuario}`);

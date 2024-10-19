@@ -1,0 +1,23 @@
+extends ../layout
+
+block content
+    h3 Editar Curso
+
+    form(action=`/administrativo/${usuario}/curso/update/${curso._id}`, method="POST")
+        input(type="hidden" name="_id" value=curso._id)
+        .form-group
+            label(for="alumnoID") ID de Alumno:
+            input.form-control(type="number" name="alumnoID" value=curso.alumno._id required)
+        .form-group
+            label(for="nombre") Nombre:
+            input.form-control(type="text" name="nombre" value=curso.alumno.nombre required readonly= true)
+        .form-group
+            label(for="apellido") Apellido:
+            input.form-control(type="text" name="apellido" value=curso.alumno.apellido required  readonly=true)
+        .form-group
+            label(for="materia") Materia:
+            input.form-control(type="text" name="materia" value=curso.materia required)
+        .form-group
+            label(for="profesor") Profesor:
+            input.form-control(type="text" name="profesor" value=curso.profesor required)    
+        button#guardar.btn.btn-success(type="submit") Actualizar

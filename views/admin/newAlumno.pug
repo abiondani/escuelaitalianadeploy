@@ -3,7 +3,7 @@ extends ../layout
 block content
     h3 Agregar Alumno
 
-    form(action="/administrativo/alumno", method="POST")
+    form(action=`/administrativo/${usuario}/alumno`, method="POST")
         .form-group
             label(for="nombre") Nombre:
             input.form-control(type="text" name="nombre" required)
@@ -29,13 +29,14 @@ block content
         script.
             var countdownElement = document.getElementById('cuenta-regresiva');
             var secondsRemaining = 3;
-
+            const usuario = !{JSON.stringify(usuario)};
+            console.log("Datos recibidos:", usuario);
             function updateCountdown() {
                 if (secondsRemaining > 0) {
                     countdownElement.textContent = secondsRemaining;
                     secondsRemaining--;
                 } else {
-                    window.location.href = "/administrativo/alumnos";
+                    window.location.href = `/administrativo/${usuario}/alumnos`;
                 }
             }
 
@@ -52,4 +53,4 @@ block content
         .alert.alert-danger(role="alert")
             | #{error}
 
-    a#volver.btn.btn-secondary.mt-3(href="/administrativo/alumnos") Volver a la lista
+    a#volver.btn.btn-secondary.mt-3(href=`/administrativo/${usuario}/alumnos`) Volver a la lista

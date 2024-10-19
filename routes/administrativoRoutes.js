@@ -2,14 +2,18 @@ const express = require("express");
 const router = express.Router();
 const administrativoController = require("../controllers/administrativoControllers");
 
-router.get("/", administrativoController.administrativo);
-router.get("/alumnos", administrativoController.getAlumnos);
-router.get("/alumnos/new", administrativoController.newAlumno);
-router.post("/alumno", administrativoController.addAlumno);
-router.get("/alumno/delete/:id", administrativoController.delAlumno);
-router.get("/inscripcion/:usuario", administrativoController.getCursos);
-
-router.get("/alumno/edit/:id", administrativoController.editAlumno);
-router.post("/alumno/update/:id", administrativoController.updateAlumno);
+router.get("/:usuario", administrativoController.administrativo);
+router.get("/:usuario/alumnos", administrativoController.getAlumnos);
+router.get("/:usuario/alumnos/new", administrativoController.newAlumno);
+router.post("/:usuario/alumno", administrativoController.addAlumno);
+router.get("/:usuario/alumno/delete/:id", administrativoController.delAlumno);
+router.get("/:usuario/cursos", administrativoController.getCursos);
+router.post("/:usuario/curso/new", administrativoController.addCurso);
+router.get("/:usuario/curso/new", administrativoController.formularioInscripcion);
+router.get("/:usuario/curso/delete/:id", administrativoController.delCurso);
+router.get("/:usuario/curso/edit/:id", administrativoController.editCurso);
+router.post("/:usuario/curso/update/:id", administrativoController.updateCurso);
+router.get("/:usuario/alumno/edit/:id", administrativoController.editAlumno);
+router.post("/:usuario/alumno/update/:id", administrativoController.updateAlumno);
 
 module.exports = router;
