@@ -22,6 +22,8 @@ exports.getAlumnos = async (req, res) => {
     console.log("Error interno del servidor\n", err);
     res.status(500).render("admin/listAlumno", {
       error: "Error interno del servidor",
+      alumnos: alumnos,
+      usuario: req.params.usuario,
     });
   }
 };
@@ -87,11 +89,13 @@ exports.delAlumno = async (req, res) => {
 
 exports.formularioInscripcion = async (req, res) => {
   const materias = await Materia.find().sort({ nombre: 1 });
+  const alumno = await Alumno.findOne({ _id: req.params.id });
 
   res.render("admin/newCurso", {
     usuario: req.params.usuario,
     materias: materias,
     id: req.params.id,
+    alumno: alumno,
   });
 };
 
@@ -111,14 +115,21 @@ exports.addCurso = async (req, res) => {
         calificacion: 0,
       });
       await nuevoCurso.save();
-      res.redirect(`/administrativo/${req.params.usuario}/alumnos`);
+
+      const materias = await Materia.find().sort({ nombre: 1 });
+
+      res.render("admin/newCurso", {
+        success: "Inscripción a curso exitosa",
+        usuario: req.params.usuario,
+        materias: materias,
+        id: req.params.id,
+        alumno: alumnoEncontrado,
+      });
     } else {
-      return res
-        .status(400)
-        .render("admin/newCurso", {
-          error: "ID de Alumno incorrecto",
-          usuario: req.params.usuario,
-        });
+      return res.status(400).render("admin/newCurso", {
+        error: "ID de Alumno incorrecto",
+        usuario: req.params.usuario,
+      });
     }
   } catch (err) {
     console.log("Error interno del servidor al inscribir a un curso\n", err);

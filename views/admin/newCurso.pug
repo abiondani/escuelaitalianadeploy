@@ -8,6 +8,12 @@ block content
             label(for="idAlumno") ID Alumno:
             input.form-control(type="number" name="idAlumno" value=id required readonly=true)
         .form-group
+            label(for="nombre") Nombre:
+            input.form-control(type="text" name="nombre" value=alumno.nombre required readonly= true)
+        .form-group
+            label(for="apellido") Apellido:
+            input.form-control(type="text" name="apellido" value=alumno.apellido required  readonly=true)
+        .form-group
             label(for="materia") Curso:
             select.form-control(name="materia" id="materia" required)
                 each materia in materias
@@ -15,10 +21,42 @@ block content
         .form-group
             label(for="profesor") Profesor:
             input.form-control(type="text" name="profesor" required)
-        button.btn.btn-success(type="submit") Guardar
-        if error
-            br
-            br
-            .alert.alert-danger(role="alert") #{error}
+        button#guardar.btn.btn-success(type="submit") Guardar
+     
 
-    a.btn.btn-secondary.mt-3(href=`/administrativo/${usuario}/alumnos`) Volver al menú anterior
+    if success
+        .alert.alert-success(role="alert")
+            | #{success}.
+        p.small.text-muted.mt-3
+            | Redirigiendo en 
+            span#cuenta-regresiva 3
+            |  segundos...            
+
+        script.
+            var countdownElement = document.getElementById('cuenta-regresiva');
+            var secondsRemaining = 3;
+            const usuario = !{JSON.stringify(usuario)};
+            console.log("Datos recibidos:", usuario);
+            function updateCountdown() {
+                if (secondsRemaining > 0) {
+                    countdownElement.textContent = secondsRemaining;
+                    secondsRemaining--;
+                } else {
+                    window.location.href = `/administrativo/${usuario}/alumnos`;
+                }
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+                document.getElementById('guardar').disabled = true;
+                const volver = document.getElementById('volver');
+                volver.classList.add('disabled');
+                volver.addEventListener('click', function(event) {
+                    event.preventDefault();
+                });
+                setInterval(updateCountdown, 1000);
+            });
+    if error
+        .alert.alert-danger(role="alert")
+            | #{error}
+
+    a#volver.btn.btn-secondary.mt-3(href=`/administrativo/${usuario}/alumnos`) Volver a la lista
