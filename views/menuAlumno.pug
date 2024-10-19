@@ -1,7 +1,7 @@
 extends layout
 
 block content
-    h3 Notas de #{alumno.nombre} #{alumno.apellido}
+    h3 Notas de #{alumno.apellido}, #{alumno.nombre}
     if cursos && cursos.length > 0
         table.table.table-striped
             thead

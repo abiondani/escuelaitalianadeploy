@@ -23,14 +23,13 @@ block content
             | #{success}.
         p.small.text-muted.mt-3
             | Redirigiendo en 
-            span#cuenta-regresiva 3
+            span#cuenta-regresiva 2
             |  segundos...            
 
         script.
             var countdownElement = document.getElementById('cuenta-regresiva');
-            var secondsRemaining = 3;
+            var secondsRemaining = 2;
             const usuario = !{JSON.stringify(usuario)};
-            console.log("Datos recibidos:", usuario);
             function updateCountdown() {
                 if (secondsRemaining > 0) {
                     countdownElement.textContent = secondsRemaining;

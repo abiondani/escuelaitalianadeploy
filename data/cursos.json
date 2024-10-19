@@ -1,57 +1,57 @@
 [
     {
         "_id": 30000001,
-        "materia": "Matemáticas",
-        "profesor": "Vanina Sassi",
+        "materia": "Modelado y Diseño de Software",
+        "profesor": "Sassi, Vanina",
         "alumno": 2000001,
         "calificacion": 5
     },
     {
         "_id": 30000002,
-        "materia": "Matemáticas",
-        "profesor": "Vanina Sassi",
+        "materia": "Modelado y Diseño de Software",
+        "profesor": "Sassi, Vanina",
         "alumno": 2000002,
         "calificacion": 0
     },
     {
         "_id": 30000003,
-        "materia": "Geografía",
-        "profesor": "Vanina Sassi",
+        "materia": "Metodología de Prueba de Sistemas",
+        "profesor": "Sassi, Vanina",
         "alumno": 2000001,
         "calificacion": 0
     },
     {
         "_id": 30000004,
-        "materia": "Historia",
-        "profesor": "Vanina Sassi",
+        "materia": "Lógica Computacional",
+        "profesor": "Sassi, Vanina",
         "alumno": 2000002,
         "calificacion": 6
     },
     {
         "_id": 30000005,
-        "materia": "Física",
-        "profesor": "Vanina Sassi",
+        "materia": "Técnica de Programación",
+        "profesor": "Sassi, Vanina",
         "alumno": 2000001,
         "calificacion": 10
     },
     {
         "_id": 30000006,
-        "materia": "Física",
-        "profesor": "Vanina Sassi",
+        "materia": "Técnica de Programación",
+        "profesor": "Sassi, Vanina",
         "alumno": 2000002,
         "calificacion": 1
     },
     {
         "_id": 30000007,
-        "materia": "Química",
-        "profesor": "Vanina Sassi",
+        "materia": "Base de Datos",
+        "profesor": "Sassi, Vanina",
         "alumno": 2000001,
         "calificacion": 0
     },
     {
         "_id": 30000008,
-        "materia": "Química",
-        "profesor": "Vanina Sassi",
+        "materia": "Base de Datos",
+        "profesor": "Sassi, Vanina",
         "alumno": 2000002,
         "calificacion": 8
     }

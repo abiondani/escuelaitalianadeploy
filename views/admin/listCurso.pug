@@ -24,7 +24,7 @@ block content
                         
 
     br
-    a.btn.btn-secondary.mt-3(href=`/administrativo/${usuario.usuario}`) Volver al menú anterior
+    a.btn.btn-secondary.mt-3(href=`/administrativo/${usuario.usuario}`) Volver al menú principal
 
 
     //- Modal para confirmar eliminación
@@ -48,8 +48,7 @@ block content
 
             // Mostrar el modal
             $('#confirmarEliminacionModal').modal('show');
-            console.log(usuario);
-            console.log(id);
+
             // El botón de eliminar 
             document.getElementById('confirmarEliminacionBtn').onclick = function () {
                 window.location.href = `/administrativo/${usuario}/curso/delete/${id}`;

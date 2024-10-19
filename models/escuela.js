@@ -77,10 +77,30 @@ const materiaSchema = new Schema({
     },
 });
 
+const profesorSchema = new Schema({
+    _id: {
+        type: Number,
+        required: true,
+    },
+    nombre: {
+        type: String,
+        required: true,
+    },
+    apellido: {
+        type: String,
+        required: true,
+    },
+    usuario: {
+        type: Number,
+        ref: "Usuario",
+    },
+});
+
 // Modelos
 const Alumno = mongoose.model("Alumno", alumnoSchema);
 const Usuario = mongoose.model("Usuario", usuarioSchema);
 const Curso = mongoose.model("Curso", cursoSchema);
 const Materia = mongoose.model("Materia", materiaSchema);
+const Profesor = mongoose.model("Profesor", profesorSchema);
 
-module.exports = { Alumno, Usuario, Curso, Materia };
+module.exports = { Alumno, Usuario, Curso, Materia, Profesor };

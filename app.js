@@ -17,7 +17,6 @@ console.log("MongoDB.........[OK]");
 // Middlewares para procesar el body de requests HTTP.
 // urlencoded lo usamos para procesar los datos de los
 // formularios.
-//app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 console.log("Middlewares.....[OK]");
@@ -51,7 +50,10 @@ async function iniciarApp() {
         let resultado = await cargaInicial("usuarios.json", "Usuario");
         if (resultado) resultado = await cargaInicial("alumnos.json", "Alumno");
         if (resultado) resultado = await cargaInicial("cursos.json", "Curso");
-        if (resultado) resultado = await cargaInicial("materias.json", "Materia");
+        if (resultado)
+            resultado = await cargaInicial("materias.json", "Materia");
+        if (resultado)
+            resultado = await cargaInicial("profesores.json", "Profesor");
         // Inicia el servidor para escuchar requests HTTP.
         app.listen(PORT, () => {
             console.log(

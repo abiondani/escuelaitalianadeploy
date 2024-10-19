@@ -1,0 +1,14 @@
+[
+    {
+        "_id": 5000001,
+        "nombre": "Vanina",
+        "apellido": "Sassi",
+        "usuario" : 1000004
+    },
+    {
+        "_id": 5000002,
+        "nombre": "Charles",
+        "apellido": "Xavier",
+        "usuario" : 1000006
+    }
+]

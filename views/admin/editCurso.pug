@@ -21,7 +21,9 @@ block content
                     option(value=materia.nombre selected=(materia.nombre === curso.materia)) #{materia.nombre}
         .form-group
             label(for="profesor") Profesor:
-            input.form-control(type="text" name="profesor" value=curso.profesor required)    
+            select.form-control(name="profesor" id="profesor" required)
+                each profesor in profesores
+                    option(value=`${profesor.apellido}, ${profesor.nombre}` selected=(curso.profesor === `${profesor.apellido}, ${profesor.nombre}`)) #{profesor.apellido}, #{profesor.nombre}
         button#guardar.btn.btn-success(type="submit") Actualizar
 
     if success
@@ -29,12 +31,12 @@ block content
             | #{success}.
         p.small.text-muted.mt-3
             | Redirigiendo en 
-            span#cuenta-regresiva 3
+            span#cuenta-regresiva 2
             |  segundos...            
 
         script.
             var countdownElement = document.getElementById('cuenta-regresiva');
-            var secondsRemaining = 3;
+            var secondsRemaining = 2;
             const usuario = !{JSON.stringify(usuario)};
             console.log("Datos recibidos:", usuario);
             function updateCountdown() {

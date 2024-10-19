@@ -28,5 +28,11 @@
         "clave": 123,
         "rol": "administrativo",
         "_id": 1000005
+    },
+    {
+        "usuario": "xavierc",
+        "clave": 123,
+        "rol": "profesor",
+        "_id": 1000006
     }
 ]
