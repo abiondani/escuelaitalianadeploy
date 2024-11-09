@@ -2,6 +2,7 @@ const path = require("path");
 const fs = require("fs");
 const mongoose = require("mongoose");
 const express = require("express");
+const bcrypt = require("bcrypt");
 
 // Nuestra app escuchará el puerto 127.0.0.1:3000
 const PORT = process.env.PORT || 3000;
@@ -72,7 +73,7 @@ async function cargaInicial(archivo, esquema) {
         console.log(`Intentando cargar el esquema ${esquema}...`);
 
         const ruta = path.join(__dirname, "data", archivo);
-        const datos = JSON.parse(fs.readFileSync(ruta, "utf8"));
+        let datos = JSON.parse(fs.readFileSync(ruta, "utf8"));
         const Esquema = mongoose.model(esquema);
         const count = await Esquema.countDocuments();
 
@@ -83,7 +84,13 @@ async function cargaInicial(archivo, esquema) {
             return false;
         }
 
-        await Esquema.insertMany(datos);
+        if (esquema === "Usuario") {
+            let datosActualizados = await hashPasswords(datos);
+            await Esquema.insertMany(datosActualizados);
+        } else {
+            await Esquema.insertMany(datos);
+        }
+
         console.log(`Carga exitosa de ${esquema}.`);
         return true;
     } catch (err) {
@@ -92,4 +99,20 @@ async function cargaInicial(archivo, esquema) {
             `Error durante la carga inicial de ${esquema}: ${err.message}`
         );
     }
+}
+
+async function hashPasswords(datos) {
+    for (let i = 0; i < datos.length; i++) {
+        try {
+            let passwordHash = await bcrypt.hash(datos[i].clave, 3);
+            datos[i].clave = passwordHash;
+        } catch (error) {
+            console.error(
+                "Error al hashear la contraseña del usuario",
+                datos[i].usuario,
+                error
+            );
+        }
+    }
+    return datos;
 }

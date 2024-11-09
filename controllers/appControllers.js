@@ -1,4 +1,5 @@
 const Rol = require("../objects/rolEnum");
+const bcrypt = require("bcrypt");
 var mongoose = require("mongoose");
 var Usuario = mongoose.model("Usuario");
 
@@ -14,14 +15,15 @@ exports.login = async function (req, res) {
         if (!usuarioRecuperado) {
             console.log("Login fallido: Usuario no encontrado.");
             return res
-                .status(400)
+                .status(401)
                 .render("index", { error: "Usuario no encontrado" });
         }
 
-        if (usuarioRecuperado.clave != contrasena) {
+        autorizado = await bcrypt.compare(contrasena, usuarioRecuperado.clave);
+        if (!autorizado) {
             console.log("Login fallido: Contraseña incorrecta.");
             return res
-                .status(400)
+                .status(401)
                 .render("index", { error: "Contraseña incorrecta" });
         }
 
