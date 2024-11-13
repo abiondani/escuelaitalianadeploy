@@ -3,6 +3,10 @@ const fs = require("fs");
 const mongoose = require("mongoose");
 const express = require("express");
 const bcrypt = require("bcrypt");
+const session = require("express-session");
+const passport = require("passport");
+require("dotenv").config();
+const { authenticateSession } = require("./middlewares/middleware");
 
 // Nuestra app escuchará el puerto 127.0.0.1:3000
 const PORT = process.env.PORT || 3000;
@@ -14,6 +18,19 @@ mongoose.connect("mongodb://localhost/escuela");
 require("./models/escuela");
 
 console.log("MongoDB.........[OK]");
+
+app.use(
+    session({
+        secret: process.env.SESSION_SECRET || "secret",
+        resave: false,
+        saveUninitialized: true,
+    })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+console.log("Sesiones........[OK]");
 
 // Middlewares para procesar el body de requests HTTP.
 // urlencoded lo usamos para procesar los datos de los
@@ -34,9 +51,9 @@ const administrativoRoutes = require("./routes/administrativoRoutes");
 const alumnoRoutes = require("./routes/alumnoRoutes");
 const profesorRoutes = require("./routes/profesorRoutes");
 app.use("/", appRoutes);
-app.use("/administrativo", administrativoRoutes);
-app.use("/alumno", alumnoRoutes);
-app.use("/profesor", profesorRoutes);
+app.use("/administrativo", authenticateSession, administrativoRoutes);
+app.use("/alumno", authenticateSession, alumnoRoutes);
+app.use("/profesor", authenticateSession, profesorRoutes);
 
 console.log("Rutas...........[OK]");
 

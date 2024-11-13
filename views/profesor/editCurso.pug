@@ -3,7 +3,7 @@ extends ../layout
 block content
     h3 Editar Curso
 
-    form(action=`/profesor/${usuario}/curso/update/${curso._id}`, method="POST")
+    form(action=`/profesor/curso/update/${curso._id}`, method="POST")
         input(type="hidden" name="_id" value=curso._id)
         .form-group
             label(for="alumnoID") ID de Alumno:
@@ -22,7 +22,7 @@ block content
             input.form-control(type="text" name="profesor" value=curso.profesor required readonly=true)
         .form-group
             label(for="calificacion") Calificacion:
-            input.form-control(type="number" name="calificacion" value=curso.calificacion required)        
+            input.form-control(type="number" name="calificacion" min="0" max="10" value=curso.calificacion required)        
         button#guardar.btn.btn-success(type="submit") Actualizar
     
     if success
@@ -36,14 +36,12 @@ block content
         script.
             var countdownElement = document.getElementById('cuenta-regresiva');
             var secondsRemaining = 2;
-            const usuario = !{JSON.stringify(usuario)};
-            console.log("Datos recibidos:", usuario);
             function updateCountdown() {
                 if (secondsRemaining > 0) {
                     countdownElement.textContent = secondsRemaining;
                     secondsRemaining--;
                 } else {
-                    window.location.href = `/profesor/${usuario}`;
+                    window.location.href = `/profesor`;
                 }
             }
 
@@ -60,4 +58,4 @@ block content
         .alert.alert-danger(role="alert")
             | #{error}
 
-    a#volver.btn.btn-secondary.mt-3(href=`/profesor/${usuario}`) Volver a la lista
+    a#volver.btn.btn-secondary.mt-3(href=`/profesor`) Volver a la lista

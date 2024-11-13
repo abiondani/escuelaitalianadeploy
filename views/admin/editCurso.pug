@@ -3,7 +3,7 @@ extends ../layout
 block content
     h3 Editar Curso
 
-    form(action=`/administrativo/${usuario}/curso/update/${curso._id}`, method="POST")
+    form(action=`/administrativo/curso/update/${curso._id}`, method="POST")
         
         .form-group
             label(for="alumnoID") ID de Alumno:
@@ -44,7 +44,7 @@ block content
                     countdownElement.textContent = secondsRemaining;
                     secondsRemaining--;
                 } else {
-                    window.location.href = `/administrativo/${usuario}/cursos`;
+                    window.location.href = `/administrativo/cursos`;
                 }
             }
 
@@ -61,4 +61,4 @@ block content
         .alert.alert-danger(role="alert")
             | #{error}
 
-    a#volver.btn.btn-secondary.mt-3(href=`/administrativo/${usuario}/cursos`) Volver a la lista
+    a#volver.btn.btn-secondary.mt-3(href=`/administrativo/cursos`) Volver a la lista

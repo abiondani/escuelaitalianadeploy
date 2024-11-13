@@ -4,7 +4,7 @@ var Curso = mongoose.model("Curso");
 
 exports.getCursos = async (req, res) => {
     try {
-        const alumno = await Alumno.findOne({ usuario: req.query.usuario });
+        const alumno = await Alumno.findOne({ usuario: req.user._id });
         let cursos;
         if (alumno) {
             cursos = await Curso.find({ alumno: alumno._id }).sort({

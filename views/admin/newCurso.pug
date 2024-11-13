@@ -3,7 +3,7 @@ extends ../layout
 block content
     h3 Inscripción a curso
 
-    form(action=`/administrativo/${usuario}/curso/new/${id}`, method="POST")
+    form(action=`/administrativo/curso/new/${id}`, method="POST")
         .form-group
             label(for="idAlumno") ID Alumno:
             input.form-control(type="number" name="idAlumno" value=id required readonly=true)
@@ -45,7 +45,7 @@ block content
                     countdownElement.textContent = secondsRemaining;
                     secondsRemaining--;
                 } else {
-                    window.location.href = `/administrativo/${usuario}/alumnos`;
+                    window.location.href = `/administrativo/alumnos`;
                 }
             }
 
@@ -62,4 +62,4 @@ block content
         .alert.alert-danger(role="alert")
             | #{error}
 
-    a#volver.btn.btn-secondary.mt-3(href=`/administrativo/${usuario}/alumnos`) Volver a la lista
+    a#volver.btn.btn-secondary.mt-3(href=`/administrativo/alumnos`) Volver a la lista

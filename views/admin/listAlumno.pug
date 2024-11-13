@@ -17,13 +17,13 @@ block content
                     td= alumno.nombre
                     td= alumno.usuario.usuario
                     td
-                        a.btn.btn-primary(href=`/administrativo/${usuario}/alumno/edit/${alumno._id}`) Editar
+                        a.btn.btn-primary(href=`/administrativo/alumno/edit/${alumno._id}`) Editar
                         a.btn.btn-danger(href="#" onclick=`confirmarEliminacion(${alumno._id}, "${alumno.apellido}, ${alumno.nombre}" ,"${usuario}")`) Eliminar
-                        a.btn.btn-success(href=`/administrativo/${usuario}/curso/new/${alumno._id}`) Inscribir a curso
+                        a.btn.btn-success(href=`/administrativo/curso/new/${alumno._id}`) Inscribir a curso
 
-    a.btn.btn-success(href=`/administrativo/${usuario}/alumnos/new`) Agregar Alumno
+    a.btn.btn-success(href=`/administrativo/alumnos/new`) Agregar Alumno
     br
-    a.btn.btn-secondary.mt-3(href=`/administrativo/${usuario}`) Volver al menú principal
+    a.btn.btn-secondary.mt-3(href=`/administrativo`) Volver al menú principal
 
     //- Modal para confirmar eliminación
     .modal.fade#confirmarEliminacionModal(tabindex="-1" role="dialog")
@@ -48,6 +48,6 @@ block content
 
             // El botón de eliminar 
             document.getElementById('confirmarEliminacionBtn').onclick = function () {
-                window.location.href = `/administrativo/${usuario}/alumno/delete/${id}`;
+                window.location.href = `/administrativo/alumno/delete/${id}`;
             };
         }

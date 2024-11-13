@@ -19,12 +19,12 @@ block content
                     td= curso.profesor                    
                     th= curso.calificacion
                     td
-                        a.btn.btn-primary(href=`/administrativo/${usuario.usuario}/curso/edit/${curso._id}`) Editar
+                        a.btn.btn-primary(href=`/administrativo/curso/edit/${curso._id}`) Editar
                         a.btn.btn-danger(href="#" onclick=`confirmarEliminacion("${usuario.usuario}",${curso._id}, "${curso.alumno.apellido}, ${curso.alumno.nombre}", "${curso.materia}")`) Dar de baja
                         
 
     br
-    a.btn.btn-secondary.mt-3(href=`/administrativo/${usuario.usuario}`) Volver al menú principal
+    a.btn.btn-secondary.mt-3(href=`/administrativo`) Volver al menú principal
 
 
     //- Modal para confirmar eliminación
@@ -51,6 +51,6 @@ block content
 
             // El botón de eliminar 
             document.getElementById('confirmarEliminacionBtn').onclick = function () {
-                window.location.href = `/administrativo/${usuario}/curso/delete/${id}`;
+                window.location.href = `/administrativo/curso/delete/${id}`;
             };
         }
