@@ -42,7 +42,7 @@ exports.addAlumno = async (req, res) => {
 
         const usuario = await Usuario.findOne({ usuario: usuarioNombre });
         if (usuario) {
-            res.status(409).render("admin/newAlumno", {
+            return res.status(409).render("admin/newAlumno", {
                 error: `El usuario ${usuarioNombre} ya existe, escoja otro.`,
             });
         }
@@ -70,7 +70,7 @@ exports.addAlumno = async (req, res) => {
         });
         await nuevoAlumno.save();
 
-        res.render("admin/newAlumno", {
+        res.status(201).render("admin/newAlumno", {
             success: "Alta de alumno exitosa",
             usuario: req.params.usuario,
         });
@@ -107,6 +107,7 @@ exports.editAlumno = async (req, res) => {
 
 exports.updateAlumno = async (req, res) => {
     try {
+        console.log(req.body);
         const {
             _id,
             nombre,
@@ -128,7 +129,7 @@ exports.updateAlumno = async (req, res) => {
 
         const alumno = await Alumno.findById(_id).populate("usuario");
 
-        res.render("admin/editAlumno", {
+        res.status(200).render("admin/editAlumno", {
             alumno: alumno,
             success: "Actualización de alumno exitosa",
             usuario: req.user.usuario,
@@ -152,7 +153,7 @@ exports.delAlumno = async (req, res) => {
         await Alumno.deleteOne({ _id: alumno._id });
         await Usuario.deleteOne({ _id: alumno.usuario });
         await Curso.deleteMany({ alumno: alumno._id });
-        res.redirect(`/administrativo/alumnos`);
+        return res.redirect(`/administrativo/alumnos`);
     } catch (err) {
         console.log(
             "Error interno del servidor al dar de baja un alumno\n",

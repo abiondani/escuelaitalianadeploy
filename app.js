@@ -14,7 +14,8 @@ const app = express();
 
 // Se estable la conexion con la base de datos y se registra
 // el modelo de Mongoose de manera global.
-mongoose.connect("mongodb://localhost/escuela");
+const dbUri = "mongodb://localhost:27017/escuela";
+mongoose.connect(dbUri);
 require("./models/escuela");
 
 console.log("MongoDB.........[OK]");
@@ -36,6 +37,7 @@ console.log("Sesiones........[OK]");
 // urlencoded lo usamos para procesar los datos de los
 // formularios.
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 console.log("Middlewares.....[OK]");
 
@@ -59,7 +61,24 @@ console.log("Rutas...........[OK]");
 
 // Iniciamos el servidor:puerto y precargamos datos de
 // prueba
-iniciarApp();
+
+// Inicia el servidor para escuchar requests HTTP.
+if (process.env.NODE_ENV != "test") {
+    iniciarApp();
+
+    app.listen(PORT, () => {
+        console.log(`El servidor está corriendo en http://localhost:${PORT}`);
+    });
+} else {
+    // const colecciones = mongoose.connection.collections;
+    // for (const i in colecciones) {
+    //     colecciones[i].deleteMany({});
+    // }
+
+    iniciarApp();
+}
+
+module.exports = app;
 
 async function iniciarApp() {
     try {
@@ -72,12 +91,6 @@ async function iniciarApp() {
             resultado = await cargaInicial("materias.json", "Materia");
         if (resultado)
             resultado = await cargaInicial("profesores.json", "Profesor");
-        // Inicia el servidor para escuchar requests HTTP.
-        app.listen(PORT, () => {
-            console.log(
-                `El servidor está corriendo en http://localhost:${PORT}`
-            );
-        });
     } catch (err) {
         console.error("Error durante la inicialización de la app:\n", err);
     }
@@ -88,12 +101,10 @@ async function iniciarApp() {
 async function cargaInicial(archivo, esquema) {
     try {
         console.log(`Intentando cargar el esquema ${esquema}...`);
-
         const ruta = path.join(__dirname, "data", archivo);
         let datos = JSON.parse(fs.readFileSync(ruta, "utf8"));
         const Esquema = mongoose.model(esquema);
         const count = await Esquema.countDocuments();
-
         if (count != 0) {
             console.log(
                 `Ya existen datos de ${esquema}, se omite la carga inicial.`
