@@ -14,7 +14,9 @@ const app = express();
 
 // Se estable la conexion con la base de datos y se registra
 // el modelo de Mongoose de manera global.
-const dbUri = "mongodb://localhost:27017/escuela";
+//const dbUri = "mongodb://localhost:27017/escuela";
+const db_password = "EscuelaItaliana";
+const dbUri = `mongodb+srv://fullstack:${db_password}@clusterescuelaitaliana.4b61u.mongodb.net/escuela?retryWrites=true&w=majority&appName=ClusterEscuelaItaliana`;
 mongoose.connect(dbUri);
 require("./models/escuela");
 
