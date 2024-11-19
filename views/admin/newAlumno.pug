@@ -29,10 +29,10 @@ block content
         script.
             var countdownElement = document.getElementById('cuenta-regresiva');
             var secondsRemaining = 2;
-            const usuario = !{JSON.stringify(usuario)};
             function updateCountdown() {
                 if (secondsRemaining > 0) {
                     countdownElement.textContent = secondsRemaining;
+                    console.log("hola");
                     secondsRemaining--;
                 } else {
                     window.location.href = `/administrativo/alumnos`;

@@ -107,7 +107,6 @@ exports.editAlumno = async (req, res) => {
 
 exports.updateAlumno = async (req, res) => {
     try {
-        console.log(req.body);
         const {
             _id,
             nombre,
