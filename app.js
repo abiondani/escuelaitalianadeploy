@@ -5,7 +5,7 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
 const passport = require("passport");
-require("dotenv").config();
+
 const { authenticateSession } = require("./middlewares/middleware");
 
 // Nuestra app escuchará el puerto 127.0.0.1:3000
@@ -72,11 +72,6 @@ if (process.env.NODE_ENV != "test") {
         console.log(`El servidor está corriendo en http://localhost:${PORT}`);
     });
 } else {
-    // const colecciones = mongoose.connection.collections;
-    // for (const i in colecciones) {
-    //     colecciones[i].deleteMany({});
-    // }
-
     iniciarApp();
 }
 
