@@ -3,8 +3,7 @@
   "version": "1.1.1",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=prod node app.js",
-    "dev": "cross-env NODE_ENV=development nodemon app.js",
+    "dev": "cross-env NODE_ENV=development nodemon index.js",
     "test": "cross-env NODE_ENV=test jest"
   },
   "keywords": [
